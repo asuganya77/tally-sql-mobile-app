@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.env
+venv/
+.env
+
+# Node / React Native
+node_modules/
+.expo/
+*.log
+android/.gradle
+android/app/build
+ios/build
+ios/Pods
+
+# Secrets
+config.json
+secrets.py
+*.env
+
+# OS files
+.DS_Store
+Thumbs.db
