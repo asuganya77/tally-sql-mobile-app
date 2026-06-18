@@ -1,45 +1,41 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * Tally Mobile App - Phase 1
+ * Dashboard | Ledger | Vouchers
  *
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Text } from 'react-native';
+import DashboardScreen from './src/screens/DashboardScreen';
+import LedgerScreen    from './src/screens/LedgerScreen';
+import VoucherScreen   from './src/screens/VoucherScreen';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const Tab = createBottomTabNavigator();
 
+export default function App() {
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused }) => {
+            const icons: Record<string, string> = { Dashboard: '📊', Ledger: '📒', Vouchers: '🧾' };
+            return <Text style={{ fontSize: 20, opacity: focused ? 1 : 0.5 }}>{icons[route.name]}</Text>;
+          },
+          tabBarActiveTintColor: '#4A6CF7',
+          tabBarInactiveTintColor: '#aaa',
+          tabBarStyle: { height: 60, paddingBottom: 8 },
+          headerStyle: { backgroundColor: '#4A6CF7' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: '700' },
+        })}
+      >
+        <Tab.Screen name="Dashboard" component={DashboardScreen} />
+        <Tab.Screen name="Ledger"    component={LedgerScreen} />
+        <Tab.Screen name="Vouchers"  component={VoucherScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
-export default App;
